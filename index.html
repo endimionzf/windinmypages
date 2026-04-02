@@ -13,9 +13,15 @@
 
   <div id="intro-scroll">
     <div id="sticky-frame">
-      <!-- Native Media Control: Absolute Ground-Truth Test -->
-      <video id="intro-video" controls muted loop playsinline webkit-playsinline preload="auto" poster="slides/optimized/1.jpg" style="display: block; opacity: 1; z-index: 100;">
-        <source src="wimp-fullscreen.mp4?v=2026.04.02.1900" type="video/mp4">
+      <button id="start-button" aria-label="Play Experience">
+        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 5V19L19 12L8 5Z" />
+        </svg>
+      </button>
+
+      <!-- High-Performance GitHub Video CDN -->
+      <video id="intro-video" muted loop playsinline webkit-playsinline preload="auto" poster="slides/optimized/1.jpg" style="display: block; opacity: 1; z-index: 100;">
+        <source src="https://raw.githubusercontent.com/endimionzf/windinmypages/master/wimp-fullscreen.mp4" type="video/mp4">
       </video>
 
       <!-- Mobile: Reliable Digital Slides (Ken Burns Effect) -->
