@@ -1,0 +1,400 @@
+/* 
+ * Wind in my Pages - Cinematic// BUILD VERSION: 2026.04.02.1870 (NATIVE GESTURE SYNC)
+console.log("%c WIMP CI/CD Version: 2026.04.02.1870 ", "background: #111; color: #00ff00; font-weight: bold; padding: 5px;");
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Playfair Display", serif;
+  background: #000;
+  overflow: hidden; /* Zero-Scroll architecture */
+}
+
+/* --- OVERLAYS --- */
+
+/* Remove legacy start-overlay logic */
+#start-overlay { display: none; }
+
+.start-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.start-content h1 {
+  font-size: 3rem;
+  letter-spacing: 0.3em;
+  color: #fff;
+  font-weight: 400;
+}
+
+#start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  padding-left: 8px; 
+  animation: pulse-glow 2s infinite;
+  z-index: 1001; /* Ensure it's above video/slides initially */
+}
+
+#start-button.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#start-button svg {
+  width: 40px;
+  height: 40px;
+}
+
+#start-button:hover {
+  background: #fff;
+  transform: scale(1.1);
+  border-color: #fff;
+}
+#start-button:hover svg {
+  fill: #000;
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+/* --- CINEMATIC ENGINE --- */
+
+#intro-scroll {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  transition: opacity 0.8s ease;
+}
+
+#sticky-frame {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #000;
+  background-image: url('../slides/optimized/4.jpg'); /* Static fallback */
+  background-size: cover;
+  background-position: center;
+}
+
+#intro-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+#background-media-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.background-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  transform: scale(1.1);
+}
+
+.background-slide.active {
+  opacity: 1;
+}
+
+/* --- KEN BURNS ANIMATIONS --- */
+
+.animate-zoom-in { animation: kb-zoom-in 30s infinite alternate ease-in-out; }
+.animate-zoom-out { animation: kb-zoom-out 30s infinite alternate ease-in-out; }
+.animate-pan-left { animation: kb-pan-left 30s infinite alternate ease-in-out; }
+.animate-pan-right { animation: kb-pan-right 30s infinite alternate ease-in-out; }
+
+@keyframes kb-zoom-in {
+  0% { transform: scale(1.1) translate(0, 0); }
+  100% { transform: scale(1.4) translate(-2%, -3%); }
+}
+
+@keyframes kb-zoom-out {
+  0% { transform: scale(1.4) translate(-2%, -3%); }
+  100% { transform: scale(1.1) translate(0, 0); }
+}
+
+@keyframes kb-pan-left {
+  0% { transform: scale(1.2) translate(5%, 0); }
+  100% { transform: scale(1.2) translate(-5%, 0); }
+}
+
+@keyframes kb-pan-right {
+  0% { transform: scale(1.2) translate(-5%, 0); }
+  100% { transform: scale(1.2) translate(5%, 0); }
+}
+
+/* --- UI COMPONENTS --- */
+
+#white-out-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.2s ease-in-out;
+  z-index: 5;
+}
+
+.intro-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  opacity: 0;
+  pointer-events: none;
+  color: white;
+  padding: 8vw;
+  transition: opacity 1.2s ease-in-out;
+  z-index: 10;
+}
+
+.intro-overlay.show { opacity: 1; }
+
+.intro-overlay.left-side {
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex-direction: column;
+  padding-bottom: 10vh;
+}
+
+.intro-overlay.right-side {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.intro-overlay.center-side {
+  justify-content: center;
+  align-items: center;
+}
+
+#wimp-logo {
+  width: clamp(150px, 25%, 300px);
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+#intro-overlay-project span {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  display: block;
+  margin-top: 15px;
+}
+
+.bio-text p {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  font-weight: 300;
+  color: #eee;
+  text-align: justify;
+}
+
+#intro-overlay-title h1 {
+  font-size: 6rem;
+  letter-spacing: 0.2em;
+  color: #000;
+  text-transform: uppercase;
+}
+
+/* Scroll Indicator */
+#scroll-indicator {
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: white;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 100;
+}
+
+#scroll-indicator.show { opacity: 1; }
+
+.scroll-mouse {
+  width: 22px;
+  height: 38px;
+  border: 2px solid white;
+  border-radius: 12px;
+  position: relative;
+}
+
+.scroll-wheel {
+  width: 3px;
+  height: 7px;
+  background-color: white;
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  transform: translateX(-50%);
+  animation: mouse-scroll 1.8s infinite;
+}
+
+@keyframes mouse-scroll {
+  0% { transform: translate(-50%, 0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translate(-50%, 18px); opacity: 0; }
+}
+
+/* --- GALLERY --- */
+
+#container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  background-color: #fff;
+  transition: opacity 1.5s ease;
+}
+
+#container.active { opacity: 1; pointer-events: auto; }
+#container.hidden { display: none; }
+
+.section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  padding: 40px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+.section.active { opacity: 1; z-index: 10; }
+
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+.text-container {
+  flex: 1;
+  padding: 40px;
+  max-width: 600px;
+}
+
+.title { font-size: 2.5rem; margin-bottom: 20px; font-weight: 600; }
+.details { font-size: 1.1rem; line-height: 1.6; font-style: italic; }
+
+/* --- RESPONSIVE REFACTOR --- */
+
+/* Hybrid Visibility Classes */
+body.is-desktop .desktop-only { display: block !important; }
+body.is-desktop .mobile-only { display: none !important; }
+body.is-mobile .mobile-only { display: block !important; }
+body.is-mobile .desktop-only { display: none !important; }
+body.is-mobile #intro-video { object-position: 70% center !important; }
+
+@media (max-width: 1366px) {
+  .intro-overlay.right-side {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+  }
+
+  .bio-text p {
+    font-size: 0.7rem;
+    line-height: 1.6;
+  }
+
+  #wimp-logo { width: 150px !important; }
+  #intro-overlay-project span { font-size: 1.8rem; }
+  #intro-overlay-title h1 { font-size: 4rem; }
+}
+
+@media (max-width: 768px) {
+  .section { flex-direction: column; padding: 20px; }
+  .image-container img { max-height: 50vh; }
+  .text-container { text-align: center; padding: 20px; }
+  .title { font-size: 1.5rem; }
+}
+
+/* --- SECURITY & HYGIENE --- */
+
+body, .section, .text-container, .title, .details {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}

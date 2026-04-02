@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wind in my Pages</title>
+  <link rel="stylesheet" href="css/style.css?v=2026.04.02.1750">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="intro-scroll">
+    <div id="sticky-frame">
+      <!-- Native Media Control: Absolute Ground-Truth Test -->
+      <video id="intro-video" controls muted loop playsinline webkit-playsinline preload="auto" poster="slides/optimized/1.jpg" style="display: block; opacity: 1; z-index: 100;">
+        <source src="wimp-fullscreen.mp4?v=2026.04.02.1900" type="video/mp4">
+      </video>
+
+      <!-- Mobile: Reliable Digital Slides (Ken Burns Effect) -->
+      <div id="background-media-container" class="mobile-only">
+        <div class="background-slide active" style="background-image: url('slides/optimized/1.jpg');"></div>
+        <div class="background-slide" style="background-image: url('slides/optimized/2.jpg');"></div>
+        <div class="background-slide" style="background-image: url('slides/optimized/3.jpg');"></div>
+        <div class="background-slide" style="background-image: url('slides/optimized/4.jpg');"></div>
+        <div class="background-slide" style="background-image: url('slides/optimized/5.jpg');"></div>
+      </div>
+      
+      <div id="white-out-overlay"></div>
+
+      <div id="intro-overlay-logo" class="intro-overlay left-side">
+        <img src="wimp-logo.png" alt="WIMP Logo" id="wimp-logo">
+      </div>
+
+      <div id="intro-overlay-project" class="intro-overlay left-side">
+        <p>PROJECT BY</p>
+        <span>ALEXANDRU CLAUDIU<br>MAXIM</span>
+      </div>
+
+      <div id="intro-overlay-text" class="intro-overlay right-side">
+        <div class="bio-text">
+          <p>Somewhere in Bucharest on Constantin-Radulescu Motru street, a walnut tree grows, undisturbed by the urban jungle surrounding it. His branches spread wide, aiming for the windows of the closest block of flats. For the first 4 floors up, summer feels cold and refreshing in the absence of too much light. Storms are mild and meditative, as the wind is dispersed by the concrete walls around the tree. But one night a storm is hitting hard. On the second floor, beyond the window, and inside safety, an ear contemplates the sounds of untamed nature. The thunders are loud and you may mistake them for car thieves. The cars certainly do. The rain is cold, yet it sounds like the street has been plucked out from the city and is now bathing in a deep frying cauldron. The wind is howling through every crack, making the whole neighborhood a giant church organ. <br><br> In the middle of this hellish requiem, an old man's blind stick hits, and hits and hits, desperately trying to figure out where he is. His rhythmic calls for help spark my curiosity. I pull the curtains and find myself in the middle of a concert. The blind man is hitting my window with his stick, but he knows where he is. He wants to show me something. He dances with the wind. Maybe the wind is a puppet master. The stick turns into a harp and with every bump in my window I hear a string hit and it takes me further and further away in time. Harp turns into a psalterium and I am already looking out my window from a castle. String hits again and turns into a lyre. The old man is not blind anymore. I can understand what he sings, but not his words. He sings about wind gods, and is bringing me the news about them. He traveled a lot, all around the world, and is full of stories. <br><br> I present to you a few stories I have recorded from the wind. Some are peaceful, some are violent. Some speak of heroes, some of villains. But all of them carry a movement that started a long time ago, perhaps from the soft wings of a butterfly, and witnessed a history longer than any life on earth. <br><br> I started recording the wind stories in 2019, but only made the project public in 2020, when, on the brink of the Covid-19 lockdown in Romania, most of us were staring outside our window, dreaming of freedom.</p>
+        </div>
+      </div>
+
+      <div id="intro-overlay-title" class="intro-overlay center-side">
+        <h1>WIND IN MY PAGES</h1>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div id="scroll-indicator">
+        <div class="scroll-mouse">
+          <div class="scroll-wheel"></div>
+        </div>
+        <span>SCROLL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Table -->
+  <div id="container" class="hidden"></div>
+  
+  <script src="js/script.js?v=2026.04.02.1900"></script>
+  <!-- SYNC HEARTBEAT: 2026.04.02.1900 -->
+</body>
+</html>

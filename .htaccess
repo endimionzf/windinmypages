@@ -1,0 +1,14 @@
+# Force Byte-Range requests (Essential for iOS Safari)
+<IfModule mod_headers.c>
+    Header set Accept-Ranges bytes
+</IfModule>
+
+# Disable Gzip/Deflate compression for video files
+<IfModule mod_deflate.c>
+    SetEnvIfNoCase Request_URI \.(?:mp4|ogv|webm|mov|m4v|gifv)$ no-gzip dont-vary
+</IfModule>
+
+# Ensure Correct MIME-Types (Including .gifv as MP4)
+AddType video/mp4 .mp4 .gifv
+AddType video/webm .webm
+AddType video/ogg .ogv

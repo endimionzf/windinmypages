@@ -1,0 +1,18 @@
+# CINEMATIC ASSET PROTECTION
+/images/
+/slides/
+
+# GSD / AGENT CORE
+.agent/
+.agents/
+.gemini/
+.gsd/
+.adapters/
+.docs/
+
+# IDE / ENVIRONMENT
+.vscode/
+*.log
+.env
+.virgo-ftp.json
+node_modules/
