@@ -9,14 +9,16 @@ console.log("%c WIMP CI/CD Version: 2026.04.02.1870 ", "background: #111; color:
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Playfair Display", serif;
+  font-family: "Lexend", sans-serif;
   background: #000;
-  overflow: hidden; /* Zero-Scroll architecture */
+  overflow: hidden;
+  /* Zero-Scroll architecture */
 }
 
 /* --- OVERLAYS --- */
@@ -32,8 +34,15 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5000; /* Absolute Top */
+  z-index: 5000;
+  /* Absolute Top */
   transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+}
+
+#start-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .start-content {
@@ -67,9 +76,10 @@ html, body {
   cursor: pointer;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 50%;
-  padding-left: 8px; 
+  padding-left: 8px;
   animation: pulse-glow 2s infinite;
-  z-index: 1001; /* Ensure it's above video/slides initially */
+  z-index: 1001;
+  /* Ensure it's above video/slides initially */
 }
 
 #start-button.hide {
@@ -88,26 +98,37 @@ html, body {
   transform: scale(1.1);
   border-color: #fff;
 }
+
 #start-button:hover svg {
   fill: #000;
 }
 
 @keyframes pulse-glow {
-  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-  70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
 }
 
 /* --- CINEMATIC ENGINE --- */
 
 #intro-scroll {
   height: 100vh;
+  height: 100dvh;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
   transition: opacity 0.8s ease;
+  cursor: pointer;
 }
 
 #sticky-frame {
@@ -115,12 +136,14 @@ html, body {
   top: 0;
   width: 100%;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   background-color: #000;
-  background-image: url('../slides/optimized/4.jpg'); /* Static fallback */
+  background-image: url('../slides/optimized/4.jpg');
+  /* Static fallback */
   background-size: cover;
   background-position: center;
 }
@@ -163,29 +186,60 @@ html, body {
 
 /* --- KEN BURNS ANIMATIONS --- */
 
-.animate-zoom-in { animation: kb-zoom-in 30s infinite alternate ease-in-out; }
-.animate-zoom-out { animation: kb-zoom-out 30s infinite alternate ease-in-out; }
-.animate-pan-left { animation: kb-pan-left 30s infinite alternate ease-in-out; }
-.animate-pan-right { animation: kb-pan-right 30s infinite alternate ease-in-out; }
+.animate-zoom-in {
+  animation: kb-zoom-in 30s infinite alternate ease-in-out;
+}
+
+.animate-zoom-out {
+  animation: kb-zoom-out 30s infinite alternate ease-in-out;
+}
+
+.animate-pan-left {
+  animation: kb-pan-left 30s infinite alternate ease-in-out;
+}
+
+.animate-pan-right {
+  animation: kb-pan-right 30s infinite alternate ease-in-out;
+}
 
 @keyframes kb-zoom-in {
-  0% { transform: scale(1.1) translate(0, 0); }
-  100% { transform: scale(1.4) translate(-2%, -3%); }
+  0% {
+    transform: scale(1.1) translate(0, 0);
+  }
+
+  100% {
+    transform: scale(1.4) translate(-2%, -3%);
+  }
 }
 
 @keyframes kb-zoom-out {
-  0% { transform: scale(1.4) translate(-2%, -3%); }
-  100% { transform: scale(1.1) translate(0, 0); }
+  0% {
+    transform: scale(1.4) translate(-2%, -3%);
+  }
+
+  100% {
+    transform: scale(1.1) translate(0, 0);
+  }
 }
 
 @keyframes kb-pan-left {
-  0% { transform: scale(1.2) translate(5%, 0); }
-  100% { transform: scale(1.2) translate(-5%, 0); }
+  0% {
+    transform: scale(1.2) translate(5%, 0);
+  }
+
+  100% {
+    transform: scale(1.2) translate(-5%, 0);
+  }
 }
 
 @keyframes kb-pan-right {
-  0% { transform: scale(1.2) translate(-5%, 0); }
-  100% { transform: scale(1.2) translate(5%, 0); }
+  0% {
+    transform: scale(1.2) translate(-5%, 0);
+  }
+
+  100% {
+    transform: scale(1.2) translate(5%, 0);
+  }
 }
 
 /* --- UI COMPONENTS --- */
@@ -200,7 +254,7 @@ html, body {
   opacity: 0;
   pointer-events: none;
   transition: opacity 1.2s ease-in-out;
-  z-index: 5;
+  z-index: 50;
 }
 
 .intro-overlay {
@@ -208,17 +262,20 @@ html, body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   opacity: 0;
   pointer-events: none;
   color: white;
   padding: 8vw;
   transition: opacity 1.2s ease-in-out;
-  z-index: 10;
+  z-index: 100;
 }
 
-.intro-overlay.show { opacity: 1; }
+.intro-overlay.show {
+  opacity: 1;
+}
 
 .intro-overlay.left-side {
   justify-content: flex-end;
@@ -285,7 +342,9 @@ html, body {
   z-index: 100;
 }
 
-#scroll-indicator.show { opacity: 1; }
+#scroll-indicator.show {
+  opacity: 1;
+}
 
 .scroll-mouse {
   width: 22px;
@@ -307,9 +366,19 @@ html, body {
 }
 
 @keyframes mouse-scroll {
-  0% { transform: translate(-50%, 0); opacity: 0; }
-  20% { opacity: 1; }
-  100% { transform: translate(-50%, 18px); opacity: 0; }
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, 18px);
+    opacity: 0;
+  }
 }
 
 /* --- GALLERY --- */
@@ -327,8 +396,14 @@ html, body {
   transition: opacity 1.5s ease;
 }
 
-#container.active { opacity: 1; pointer-events: auto; }
-#container.hidden { display: none; }
+#container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#container.hidden {
+  display: none;
+}
 
 .section {
   position: absolute;
@@ -342,7 +417,10 @@ html, body {
   transition: opacity 1.5s ease;
 }
 
-.section.active { opacity: 1; z-index: 10; }
+.section.active {
+  opacity: 1;
+  z-index: 10;
+}
 
 .image-container {
   flex: 1;
@@ -364,44 +442,113 @@ html, body {
   max-width: 600px;
 }
 
-.title { font-size: 2.5rem; margin-bottom: 20px; font-weight: 600; }
-.details { font-size: 1.1rem; line-height: 1.6; font-style: italic; }
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.details {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-style: italic;
+}
 
 /* --- RESPONSIVE REFACTOR --- */
 
 /* Hybrid Visibility Classes */
-body.is-desktop .desktop-only { display: block !important; }
-body.is-desktop .mobile-only { display: none !important; }
-body.is-mobile .mobile-only { display: block !important; }
-body.is-mobile .desktop-only { display: none !important; }
-body.is-mobile #intro-video { object-position: 70% center !important; }
+body.is-desktop .desktop-only {
+  display: block !important;
+}
+
+body.is-desktop .mobile-only {
+  display: none !important;
+}
+
+body.is-mobile .mobile-only {
+  display: block !important;
+}
+
+body.is-mobile .desktop-only {
+  display: none !important;
+}
+
+body.is-mobile #intro-video {
+  object-position: 70% center !important;
+}
 
 @media (max-width: 1366px) {
+  .intro-overlay.left-side {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 0;
+  }
+
   .intro-overlay.right-side {
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 4dvh 20px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: hidden;
+  }
+
+  .bio-text {
+    width: 90%;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .bio-text p {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     line-height: 1.6;
+    text-align: justify;
   }
 
-  #wimp-logo { width: 150px !important; }
-  #intro-overlay-project span { font-size: 1.8rem; }
-  #intro-overlay-title h1 { font-size: 4rem; }
+  #wimp-logo {
+    width: clamp(120px, 40%, 180px) !important;
+  }
+
+  #intro-overlay-project span {
+    font-size: 1.6rem;
+  }
+
+  #intro-overlay-title h1 {
+    font-size: 3.5rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 @media (max-width: 768px) {
-  .section { flex-direction: column; padding: 20px; }
-  .image-container img { max-height: 50vh; }
-  .text-container { text-align: center; padding: 20px; }
-  .title { font-size: 1.5rem; }
+  .section {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .image-container img {
+    max-height: 50vh;
+  }
+
+  .text-container {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
 }
 
 /* --- SECURITY & HYGIENE --- */
 
-body, .section, .text-container, .title, .details {
+body,
+.section,
+.text-container,
+.title,
+.details {
   user-select: none;
   -webkit-user-select: none;
 }

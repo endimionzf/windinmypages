@@ -4,13 +4,14 @@ let scrollAccumulator = 0;
 let touchStartY = 0; 
 let touchMoveY = 0;
 const SCROLL_THRESHOLD = 450; 
-
+let lastTap = 0;
+let tapTimeout;
 // 1. GLOBAL DEVICE DETECTION (MUST BE TOP FOR STYLES)
 const hasTouch = ( 'ontouchstart' in window ) || ( navigator.maxTouchPoints > 0 );
 const isMobile = (hasTouch && window.innerWidth <= 1366) || (window.innerWidth <= 1024);
 
-// BUILD VERSION: 2026.04.02.1930 (REMOTE MEDIA READY)
-console.log("%c WIMP CI/CD Version: 2026.04.02.1930 ", "background: #111; color: #00ff00; font-weight: bold; padding: 5px;");
+// BUILD VERSION: 2026.04.02.2240 (REMOTE MEDIA READY)
+console.log("%c WIMP CI/CD Version: 2026.04.02.2240 ", "background: #111; color: #00ff00; font-weight: bold; padding: 5px;");
 console.log("WIMP Debug: FTP Upload Sync Confirmed");
 console.log("WIMP Debug: isMobile =", isMobile, "hasTouch =", hasTouch, "width =", window.innerWidth);
 
@@ -63,8 +64,9 @@ function bootstrapStyles() {
             100% { transform: scale(1.4) translate(-2%, -3%); }
         }
         /* Essential layout for overlays if CSS fails */
-        .intro-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s; z-index: 10; }
+        .intro-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s; z-index: 100 !important; }
         .intro-overlay.show { opacity: 1 !important; }
+        #white-out-overlay { z-index: 50 !important; }
     `;
     document.head.appendChild(style);
 }
@@ -151,9 +153,9 @@ function initExperience() {
   console.log("WIMP Debug: initExperience triggered at", new Date().toLocaleTimeString());
   if (!introActive) return; 
 
-  // 1. Hide the start button immediately (Native-style)
-  if (startButton) {
-    startButton.classList.add('hide');
+  // 1. Fade the entire start overlay immediately
+  if (startOverlay) {
+    startOverlay.classList.add('fade-out');
   }
 
   // 2. Clear state and prepare intro
@@ -248,22 +250,19 @@ function renderState(index) {
       showOverlay(scrollIndicator);
       break;
     case 1:
-    case 2:
       showOverlay(overlayLogo);
       break;
-    case 3: 
+    case 2: // Gap 1 (Nothing)
       break;
-    case 4:
-    case 5:
+    case 3:
       showOverlay(overlayProject);
       break;
-    case 6: 
+    case 4: // Gap 2 (Nothing)
       break;
-    case 7:
-    case 8:
+    case 5: 
       showOverlay(overlayText);
       break;
-    case 9: // WHITE CURTAIN 
+    case 6: // WHITE CURTAIN ONLY
       whiteOutOverlay.style.opacity = '1';
       if (window.innerWidth <= 1366) {
         allSlides.forEach(slide => slide.classList.remove('active'));
@@ -274,24 +273,16 @@ function renderState(index) {
         }
       }
       break;
-    case 10: 
+    case 7: // WHITE CURTAIN + TITLE
       whiteOutOverlay.style.opacity = '1';
       showOverlay(overlayTitle);
-      if (window.innerWidth <= 1366) {
-        allSlides.forEach(slide => slide.classList.remove('active'));
-      } else {
-        if (video) video.style.opacity = '0'; 
-      }
-      break;
-    case 11: // Pure White Screen 
-      whiteOutOverlay.style.opacity = '1';
       if (window.innerWidth <= 1366) {
         allSlides.forEach(slide => slide.classList.remove('active'));
       } else {
         if (video) video.style.opacity = '0';
       }
       break;
-    case 12: // Gallery entry
+    case 8: // Gallery entry
       enterGallery();
       break;
   }
@@ -301,7 +292,7 @@ function renderState(index) {
 // renderState(0);
 
 function updateState(direction) {
-  if (direction > 0 && currentState < 12) {
+  if (direction > 0 && currentState < 8) {
     currentState++;
   } else if (direction < 0 && currentState > 0) {
     currentState--;
@@ -349,7 +340,7 @@ function returnToIntro() {
 
   setTimeout(() => {
     galleryContainer.classList.add('hidden');
-    currentState = 11; 
+    currentState = 7; // Return to the White/Title screen
     renderState(currentState);
     if (window.innerWidth <= 1366) startSlider();
   }, 500);
@@ -390,6 +381,26 @@ window.addEventListener('touchend', (e) => {
             if (currentIndex > 0) showSlide(currentIndex - 1);
         }
     }
+  }
+});
+
+introScroll.addEventListener('click', (e) => {
+  if (!introActive) return;
+  
+  const now = Date.now();
+  const DOUBLE_TAP_THRESHOLD = 300;
+
+  if (now - lastTap < DOUBLE_TAP_THRESHOLD) {
+    // Double Tap: Go Back
+    clearTimeout(tapTimeout);
+    updateState(-1);
+    lastTap = 0;
+  } else {
+    // Single Tap: Go Forward (Delayed to check for double tap)
+    lastTap = now;
+    tapTimeout = setTimeout(() => {
+      updateState(1);
+    }, DOUBLE_TAP_THRESHOLD);
   }
 });
 

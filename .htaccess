@@ -12,3 +12,10 @@
 AddType video/mp4 .mp4 .gifv
 AddType video/webm .webm
 AddType video/ogg .ogv
+
+# Cache Control for JS/CSS (Ensures ?v= works with Cloudflare)
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css)$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+</IfModule>
