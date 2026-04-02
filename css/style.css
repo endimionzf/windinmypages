@@ -21,8 +21,20 @@ html, body {
 
 /* --- OVERLAYS --- */
 
-/* Remove legacy start-overlay logic */
-#start-overlay { display: none; }
+/* Premium Start Overlay */
+#start-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000; /* Absolute Top */
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+}
 
 .start-content {
   text-align: center;
